@@ -164,7 +164,7 @@ const URLS = [
   /* 2  */ 'https://script.google.com/macros/s/AKfycbzmSTLgVwTCKPim29hbeSW43O42W5HK4WcY1zJKgGkjKx1dJEN4fSVp931CHLkD9LTMQg/exec',
   /* 3  */ 'https://script.google.com/macros/s/AKfycbyWcjgd-3E1DrOoNr0f3WUDbc4CIxQoFxbYyzjFhoInPGpHcBBA4TQnOhbQ6-8BwU4Y/exec',
   /* 4  */ 'https://script.google.com/macros/s/AKfycbzjg8Pk1aexKAKJq1JALw8VFvVo-fJ8FnniOSgcV81wnWay0bHMr3ZsF4wLpuJJnPvc/exec',
-  /* 5  */ 'https://script.google.com/macros/s/AKfycbwZ4wUiHodgYjeAoTqf1LXZju5bnMeddsesnyVAlllwFlegOhET_VFxmN1L6D_yQT6d/exec',  
+  /* 5  */ 'https://script.google.com/macros/s/AKfycbwZ4wUiHodgYjeAoTqf1LXZju5bnMeddsesnyVAlllwFlegOhET_VFxmN1L6D_yQT6d/exec',
   /* 6  */ 'https://script.google.com/macros/s/AKfycbzbaO7Cq3XkUy9R8vTbZIC4vUb9OdTMzE7NeymGhOhhaMDRe-kIZprmV38-zxESGwZ5/exec',
   /* 7  */ 'https://script.google.com/macros/s/AKfycbykYgqX6pdcVicbKkHLwEKW2uDFDjyUhSKFhuczFX1ipXI5gm9VN299qDv4F2W6nIpBiw/exec',
   /* 8  */ 'https://script.google.com/macros/s/AKfycbxGvXKm5sWr1uWOSuDALE_wMq1g_P3l-B446gxSH2M8yHYFle1bQsTdSwNI_s2uT-Ix/exec',
@@ -270,7 +270,7 @@ async function upload() {
   try {
     status('খালি জায়গা দেখা হচ্ছে...');
     await loadSpace();
-    const need = file.size * 2.2 + 1e6;
+    const need = file.size * 2.2 + 1e6; // আপলোডের সময় সাময়িকভাবে ২ গুণ জায়গা লাগে
     let acc;
     if ($('sel').value === 'auto') {
       const ok = ACCOUNTS.filter(a => a.space && a.space.ok && a.space.free > need).sort((x, y) => y.space.free - x.space.free);
@@ -370,33 +370,42 @@ clearSearch.addEventListener('click', () => {
 });
 
 /* ===== লগইন: পাসওয়ার্ড (KEY) আপনার Apps Script নিজে যাচাই করে ===== */
-async function check(k) {
-  if (!ACCOUNTS.length) return false;
-  const res = await Promise.all(ACCOUNTS.map(a =>
-    fetch(a.url + '?key=' + encodeURIComponent(k) + '&action=space')
-      .then(r => r.json()).catch(() => ({ ok: false }))
-  ));
-  return res.some(r => r && r.ok);
+// ফলাফল: 'ok' = সঠিক, 'bad' = ভুল পাসওয়ার্ড, 'error' = সংযোগ হয়নি
+function check(k) {
+  if (!ACCOUNTS.length) return Promise.resolve('error');
+  return new Promise(resolve => {
+    let left = ACCOUNTS.length, answered = false;
+    ACCOUNTS.forEach(a => {
+      fetch(a.url + '?key=' + encodeURIComponent(k) + '&action=space')
+        .then(r => r.json())
+        .then(r => { answered = true; return r; })
+        .catch(() => null)
+        .then(r => {
+          if (r && r.ok) resolve('ok');                        // প্রথম সঠিক উত্তরেই ঢুকবে
+          else if (--left === 0) resolve(answered ? 'bad' : 'error');
+        });
+    });
+  });
 }
 
-async function enter(k, fromForm) {
-  const ok = await check(k);
-  if (ok) {
-    KEY = k;
-    try { sessionStorage.setItem('mdk', k); } catch (e) {}
-    document.body.classList.add('in');
-    start();
-  } else {
-    try { sessionStorage.removeItem('mdk'); } catch (e) {}
-    if (fromForm) $('ge').textContent = ACCOUNTS.length ? 'পাসওয়ার্ড ভুল অথবা সংযোগ হয়নি' : 'কোডে URL বসানো হয়নি';
-  }
-  return ok;
+function openApp(k) {
+  KEY = k;
+  document.body.classList.add('in');
+  start();
 }
 
 $('gf').addEventListener('submit', async e => {
   e.preventDefault();
+  const k = $('gp').value;
   $('gb').disabled = true; $('ge').textContent = 'যাচাই হচ্ছে...';
-  await enter($('gp').value, true);
+  const r = await check(k);
+  if (r === 'ok') {
+    try { sessionStorage.setItem('mdk', k); } catch (e) {}
+    openApp(k);
+  } else {
+    $('ge').textContent = r === 'bad' ? 'পাসওয়ার্ড ভুল'
+      : 'সংযোগ হয়নি। ইন্টারনেট বা URL দেখুন';
+  }
   $('gb').disabled = false;
 });
 
@@ -405,9 +414,19 @@ $('lo').onclick = () => {
   location.reload();
 };
 
+// রিফ্রেশ করলে: সেভ করা পাসওয়ার্ড থাকলে সাথে সাথে খুলে দেবে
 let saved = null;
 try { saved = sessionStorage.getItem('mdk'); } catch (e) {}
-if (saved) enter(saved, false);
+if (saved) {
+  openApp(saved);
+  // পেছনে যাচাই: শুধু পাসওয়ার্ড সত্যিই ভুল হলে (যেমন KEY বদলেছে) লগআউট
+  check(saved).then(r => {
+    if (r === 'bad') {
+      try { sessionStorage.removeItem('mdk'); } catch (e) {}
+      location.reload();
+    }
+  });
+}
 </script>
 </body>
 </html>
