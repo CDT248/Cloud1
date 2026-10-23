@@ -11,7 +11,7 @@
 <style>
 :root{color-scheme:light;--ink:#101c32;--bg:#f3f6fc;--card:#fff;--tx:#17243a;--mut:#718096;--bd:#e3eaf4;--blue:#356dff;--blue2:#2455dc;--mint:#12b886;--coral:#f05b65;--purple:#8057ed;--r:22px;--shadow:0 12px 34px rgba(28,52,92,.07)}
 @media(prefers-color-scheme:dark){:root{color-scheme:dark;--ink:#0b1426;--bg:#08111f;--card:#111d30;--tx:#edf3ff;--mut:#9aa9bf;--bd:#24334a;--blue:#5b88ff;--blue2:#4070f5;--mint:#39d6a5;--coral:#ff7882;--purple:#a48aff;--shadow:0 12px 34px rgba(0,0,0,.18)}}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 10% 0%,rgba(53,109,255,.09),transparent 34%),radial-gradient(ellipse at 95% 20%,rgba(18,184,134,.07),transparent 30%),var(--bg);color:var(--tx);font-family:'Hind Siliguri',system-ui,sans-serif;line-height:1.5;min-height:100vh}button,select,input{font:inherit}button{touch-action:manipulation}:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.wrap{width:min(1120px,100%);margin:auto;padding:0 22px 48px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}[hidden]{display:none!important}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 10% 0%,rgba(53,109,255,.09),transparent 34%),radial-gradient(ellipse at 95% 20%,rgba(18,184,134,.07),transparent 30%),var(--bg);color:var(--tx);font-family:'Hind Siliguri',system-ui,sans-serif;line-height:1.5;min-height:100vh}button,select,input{font:inherit}button{touch-action:manipulation}:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.wrap{width:min(1120px,100%);margin:auto;padding:0 22px 48px}
 #gate{min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at 50% 0%,rgba(53,109,255,.16),transparent 55%),var(--bg)}body.in #gate{display:none}body:not(.in) .wrap{display:none}.gc{width:100%;max-width:390px;background:var(--card);border:1px solid var(--bd);border-radius:28px;padding:32px 26px;display:grid;gap:15px;text-align:center;box-shadow:var(--shadow)}.gc .gi{width:78px;height:78px;display:grid;place-items:center;margin:0 auto 2px;border-radius:25px;background:linear-gradient(145deg,#e5efff,#f0f6ff);color:#4a88ff;font-size:46px;box-shadow:0 12px 28px rgba(53,109,255,.14)}.gc h2{margin:0;font-size:24px;letter-spacing:-.4px}.gc input{width:100%;padding:14px 15px;border:1px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font-size:15px}.gc input:focus{border-color:var(--blue);outline:3px solid rgba(53,109,255,.12)}#ge{font-size:13px;color:var(--coral);min-height:18px}
 .hero{position:relative;overflow:visible;background:linear-gradient(120deg,#101b31 0%,#182e53 55%,#254c87 100%);color:#fff;margin:0 -22px;padding:26px clamp(20px,4vw,38px) 30px;border-radius:0 0 32px 32px;box-shadow:0 18px 42px rgba(16,35,69,.16)}.hero:after{content:"";position:absolute;width:250px;height:250px;border:1px solid rgba(255,255,255,.09);border-radius:50%;right:7%;top:-160px;box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 60px rgba(255,255,255,.02);pointer-events:none}.hero .top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#b9c9e3;gap:12px;flex-wrap:wrap}.hero .top b{color:#fff;font-size:18px;font-weight:700;letter-spacing:.1px}.hero .tb{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.big{font-size:clamp(44px,6vw,68px);font-weight:700;letter-spacing:-2px;line-height:1.05;margin:28px 0 5px}.big small{font-size:24px;font-weight:500;letter-spacing:0;margin-left:7px;color:#b9c9e3}.sub{font-size:14px;color:#b9c9e3}.seg{display:flex;gap:5px;margin-top:24px;height:12px}.seg i{display:block;border-radius:9px;background:#2c4162;overflow:hidden;min-width:5px}.seg i b{display:block;height:100%;border-radius:9px}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:13px;font-size:12px;color:#c4d2e7}.legend span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px}.rf{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:9px 13px;font-size:13px;cursor:pointer;transition:background .2s,transform .2s}.rf:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}.rf.lo{background:#f05b65;border-color:#f05b65}.rf.lo:hover{background:#df4853}
 .menu-wrap{position:relative}.menu-panel{position:absolute;top:calc(100% + 10px);right:0;width:235px;padding:16px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:18px;box-shadow:0 16px 40px rgba(0,0,0,.18);z-index:100}.menu-panel[hidden]{display:none}.menu-title{font-size:15px;font-weight:700;margin-bottom:12px}.menu-option{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer}.menu-option input{width:17px;height:17px;accent-color:var(--blue);cursor:pointer}.menu-note{font-size:12px;color:var(--mut);margin-top:9px}
@@ -189,14 +189,14 @@ const URLS = [
   /* 10 */ 'https://script.google.com/macros/s/AKfycbyP5Pn7JoA0rvUFnjLgr8RcyAnEoIY2LeJCdJ5hvb1YBwcx6L-UcFkVXn05wyAmMkMx/exec',
   /* 11 */ 'https://script.google.com/macros/s/AKfycbxg-aERyiOaFON2lt22PIXPsw2lbObHOTAdyijoovl0cHOcu2cdom-dwrIgM-axS58uMQ/exec',
   /* 12 */ 'https://script.google.com/macros/s/AKfycbxTgoG6wbeaYdiBUWRMke2IZdlcvvMVUce9hy760fuYNtveLMuRCaG_NzOuozoNt6sd/exec',
-  /* 13 */ 'https://script.google.com/macros/s/AKfycbzYpBM9_LPIc1yFX5Xkzo1-b2QU1K2zKYnKxxDPeVCzIFogZraMVsqjxwT1Y6K5iCg/exec',
+  /* 13 */ '',
   /* 14 */ '',
   /* 15 */ ''
 ];
 // ============================================================
 
 let KEY = '';
-const CH = 3 * 1024 * 1024;
+const CH = 512 * 1024; // ছোট chunk: PDF upload request-size সমস্যা কমাতে
 const COLORS = ['#2f6bff','#17b890','#ff6b57','#f5a623','#8e5cf7','#e6478f','#14a7d6','#7bb82b','#d9534f','#5a6fd6','#c98a1b','#2aa198','#b85cd6','#4d8f5b','#d6603a'];
 const ACCOUNTS = [];
 URLS.forEach((u, i) => { u = (u || '').trim(); if (u) ACCOUNTS.push({ name: 'Account ' + (i + 1), url: u, color: COLORS[i % 15] }); });
@@ -410,14 +410,32 @@ async function uploadOne(file, acc, fileNo, fileCount, onProgress) {
   const total = Math.max(1, Math.ceil(file.size / CH));
   const id = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
   for (let i = 0; i < total; i++) {
-    const data = await b64(file.slice(i * CH, (i + 1) * CH));
-    const r = await post(acc, { action: 'upload_chunk', uploadId: id, index: i, total, data, name: file.name, mime: file.type });
-    if (!r.ok) throw new Error(r.error || 'আপলোড হয়নি: ' + file.name);
+    const start = i * CH;
+    const data = await b64(file.slice(start, Math.min(start + CH, file.size)));
+    let r = null, lastError = '';
+    // সাময়িক নেটওয়ার্ক/Apps Script ত্রুটি হলে একই chunk সর্বোচ্চ ৩ বার চেষ্টা করবে।
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        r = await post(acc, { action: 'upload_chunk', uploadId: id, index: i, total, data, name: file.name, mime: file.type || mimeFromName(file.name) || 'application/octet-stream' });
+        if (r && r.ok) break;
+        lastError = (r && r.error) || 'সার্ভার chunk গ্রহণ করেনি';
+      } catch (err) {
+        lastError = err && err.message ? err.message : 'নেটওয়ার্ক সংযোগ বিচ্ছিন্ন';
+      }
+      if (attempt < 3) {
+        status('সংযোগ পুনরায় চেষ্টা হচ্ছে (' + attempt + '/3): ' + file.name + ' • অংশ ' + (i + 1) + '/' + total);
+        await new Promise(resolve => setTimeout(resolve, attempt * 900));
+      }
+    }
+    if (!r || !r.ok) throw new Error('অংশ ' + (i + 1) + '/' + total + ' আপলোড হয়নি: ' + lastError);
+    if (i === total - 1 && r.done !== true) {
+      throw new Error('শেষ অংশ পাঠানো হয়েছে, কিন্তু সার্ভার ফাইল তৈরি নিশ্চিত করেনি। Apps Script-এর Execution log দেখুন।');
+    }
     const pct = (i + 1) / total * 100;
     if (typeof onProgress === 'function') onProgress(pct);
     else {
       $('pg').style.width = (((fileNo - 1) + pct / 100) / fileCount * 100) + '%';
-      status('আপলোড হচ্ছে (' + fileNo + '/' + fileCount + '): ' + file.name + ' — ' + Math.round(pct) + '%');
+      status('আপলোড হচ্ছে (' + fileNo + '/' + fileCount + '): ' + file.name + ' — ' + Math.round(pct) + '% (' + (i + 1) + '/' + total + ' অংশ)');
     }
   }
 }
@@ -784,9 +802,43 @@ function check(k) {
   });
 }
 
+/* ===== 5 মিনিট নিষ্ক্রিয় থাকলে Auto Logout ===== */
+const IDLE_LOGOUT_MS = 5 * 60 * 1000;
+let idleLogoutTimer = null;
+let idleLogoutStarted = false;
+
+function stopIdleLogoutTimer() {
+  if (idleLogoutTimer) clearTimeout(idleLogoutTimer);
+  idleLogoutTimer = null;
+}
+
+function resetIdleLogoutTimer() {
+  if (!KEY || !document.body.classList.contains('in')) return;
+  stopIdleLogoutTimer();
+  idleLogoutTimer = setTimeout(() => {
+    if (!KEY) return;
+    // Upload/Download চলাকালে auto logout করবেন না; কাজ শেষ হলে inactivity timer আবার চলবে।
+    const transferBusy = Array.isArray(ACCOUNTS) && ACCOUNTS.some(a => a && (a.uploading || a.activityKind === 'busy'));
+    if (transferBusy) { resetIdleLogoutTimer(); return; }
+    idleLogoutStarted = true;
+    KEY = '';
+    try {
+      sessionStorage.removeItem('mdk');
+      sessionStorage.setItem('md_auto_logged_out', '1');
+    } catch (e) {}
+    location.reload();
+  }, IDLE_LOGOUT_MS);
+}
+
+// Mouse, keyboard, scrolling, touch, and form interaction count as activity.
+['click','mousemove','mousedown','keydown','scroll','touchstart','input','change'].forEach(eventName => {
+  document.addEventListener(eventName, resetIdleLogoutTimer, { passive: true });
+});
+
 function openApp(k) {
   KEY = k;
   document.body.classList.add('in');
+  resetIdleLogoutTimer();
   start();
 }
 
@@ -806,9 +858,22 @@ $('gf').addEventListener('submit', async e => {
 });
 
 $('lo').onclick = () => {
-  try { sessionStorage.removeItem('mdk'); } catch (e) {}
+  stopIdleLogoutTimer();
+  KEY = '';
+  try {
+    sessionStorage.removeItem('mdk');
+    sessionStorage.removeItem('md_auto_logged_out');
+  } catch (e) {}
   location.reload();
 };
+
+// Show a message on the login screen after automatic logout.
+try {
+  if (sessionStorage.getItem('md_auto_logged_out') === '1') {
+    $('ge').textContent = 'নিরাপত্তার জন্য ৫ মিনিট নিষ্ক্রিয় থাকায় আপনাকে লগআউট করা হয়েছে। আবার লগইন করুন।';
+    sessionStorage.removeItem('md_auto_logged_out');
+  }
+} catch (e) {}
 
 let saved = null;
 try { saved = sessionStorage.getItem('mdk'); } catch (e) {}
